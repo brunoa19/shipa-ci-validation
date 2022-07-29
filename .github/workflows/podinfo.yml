@@ -1,0 +1,25 @@
+name: build
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  policy-scan-ghaction-shipa-policy-validator:
+    runs-on: ubuntu-latest
+    name: Validate Helm Chart
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: example 2 - Run policy scan using "env"
+        uses: shipa-corp/ghaction-shipa-policy-validator@v0.0.1
+        if: always()
+        env:
+          SHIPA_API: ${{ secrets.SHIPA_API }}
+          SHIPA_TOKEN: ${{ secrets.SHIPA_TOKEN }}
+          FRAMEWORK: ${{ secrets.FRAMEWORK }}
+          CHART_LOCATION: .
